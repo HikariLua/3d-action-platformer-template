@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://brc2gbu0l4tg3"]
 
+[ext_resource type="Script" uid="uid://dsp706oo18ute" path="res://temp/debug_stage.gd" id="1_pmxsu"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_dm68w"]
 size = Vector3(10, 0.1, 10)
 
@@ -9,7 +11,22 @@ albedo_color = Color(0.30240002, 0.63, 0.31332, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_pmxsu"]
 size = Vector3(10, 0.1, 10)
 
-[node name="DebugStage" type="Node3D" unique_id=1152093587]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_pmxsu"]
+
+[sub_resource type="Sky" id="Sky_x347r"]
+sky_material = SubResource("ProceduralSkyMaterial_pmxsu")
+
+[sub_resource type="Environment" id="Environment_5n7jr"]
+background_mode = 2
+sky = SubResource("Sky_x347r")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 2
+tonemap_mode = 2
+
+[node name="DebugStage" type="Node3D" unique_id=1152093587 node_paths=PackedStringArray("static_body_3d")]
+script = ExtResource("1_pmxsu")
+static_body_3d = NodePath("StaticBody3D")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1961792096]
 
@@ -19,3 +36,13 @@ shape = SubResource("BoxShape3D_dm68w")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1387308986]
 material_override = SubResource("StandardMaterial3D_dm68w")
 mesh = SubResource("BoxMesh_pmxsu")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1476215448]
+transform = Transform3D(1, 0, 0, 0, 0.8039399, 0.5947105, 0, -0.5947105, 0.8039399, 0, 4.7787538, 6.6917152)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1650236770]
+environment = SubResource("Environment_5n7jr")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=223826005]
+transform = Transform3D(0.72092617, -0.49909043, 0.48080578, 0, 0.69379157, 0.72017586, -0.6930119, -0.51919365, 0.5001725, 0, 0, 0)
+shadow_enabled = true

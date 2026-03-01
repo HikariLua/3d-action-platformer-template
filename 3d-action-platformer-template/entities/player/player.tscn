@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c6osf3bq18xy"]
+
+[ext_resource type="Script" uid="uid://d3ekbefsf8y5p" path="res://systems/states/state_machine.gd" id="1_abrql"]
+[ext_resource type="Script" uid="uid://b6gtx1kj7pvt" path="res://temp/idle.gd" id="2_sglur"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sfv1e"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfv1e"]
+
+[node name="Player" type="CharacterBody3D" unique_id=866541521]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=936769468]
+mesh = SubResource("CapsuleMesh_sfv1e")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1489196759]
+shape = SubResource("CapsuleShape3D_sfv1e")
+
+[node name="StateMachine" type="Node" parent="." unique_id=900024361 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("1_abrql")
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://d3ekbefsf8y5p"
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=493001187]
+script = ExtResource("2_sglur")
