@@ -23,32 +23,32 @@ func _on_enter_with_message(_message: Dictionary) -> void:
 
 
 ## TODO: add docs
-func _finite_input(_event: InputEvent) -> void:
+func _state_input(_event: InputEvent) -> void:
 	pass
 
 
 ## TODO: add docs
-func _finite_shortcut_input(_event: InputEvent) -> void:
+func _state_shortcut_input(_event: InputEvent) -> void:
 	pass
 
 
 ## TODO: add docs
-func _finite_unhandled_input(_event: InputEvent) -> void:
+func _state_unhandled_input(_event: InputEvent) -> void:
 	pass
 
 
 ## TODO: add docs
-func _finite_unhandled_key_input(_event: InputEvent) -> void:
+func _state_unhandled_key_input(_event: InputEvent) -> void:
 	pass
 
 
 ## TODO: add docs
-func _finite_process(_delta: float) -> void:
+func _state_process(_delta: float) -> void:
 	pass
 
 
 ## TODO: add docs
-func _finite_physics_process(_delta: float) -> void:
+func _state_physics_process(_delta: float) -> void:
 	pass
 
 

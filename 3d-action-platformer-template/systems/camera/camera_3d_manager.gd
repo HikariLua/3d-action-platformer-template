@@ -1,0 +1,2 @@
+class_name Camera3DManager
+extends Node3D

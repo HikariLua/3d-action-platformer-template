@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://brc2gbu0l4tg3"]
 
 [ext_resource type="Script" uid="uid://dsp706oo18ute" path="res://temp/debug_stage.gd" id="1_pmxsu"]
+[ext_resource type="PackedScene" uid="uid://c6osf3bq18xy" path="res://entities/player/player.tscn" id="2_x347r"]
+[ext_resource type="Script" uid="uid://b2knsmyh2hucs" path="res://systems/camera/camera_3d_manager.gd" id="3_5n7jr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dm68w"]
 size = Vector3(10, 0.1, 10)
@@ -24,9 +26,8 @@ ambient_light_color = Color(1, 1, 1, 1)
 reflected_light_source = 2
 tonemap_mode = 2
 
-[node name="DebugStage" type="Node3D" unique_id=1152093587 node_paths=PackedStringArray("static_body_3d")]
+[node name="DebugStage" type="Node3D" unique_id=1152093587]
 script = ExtResource("1_pmxsu")
-static_body_3d = NodePath("StaticBody3D")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1961792096]
 
@@ -37,12 +38,27 @@ shape = SubResource("BoxShape3D_dm68w")
 material_override = SubResource("StandardMaterial3D_dm68w")
 mesh = SubResource("BoxMesh_pmxsu")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1476215448]
-transform = Transform3D(1, 0, 0, 0, 0.8039399, 0.5947105, 0, -0.5947105, 0.8039399, 0, 4.7787538, 6.6917152)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1650236770]
 environment = SubResource("Environment_5n7jr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=223826005]
 transform = Transform3D(0.72092617, -0.49909043, 0.48080578, 0, 0.69379157, 0.72017586, -0.6930119, -0.51919365, 0.5001725, 0, 0, 0)
 shadow_enabled = true
+
+[node name="Player" parent="." unique_id=866541521 instance=ExtResource("2_x347r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.8779716, 0)
+
+[node name="Run" parent="Player/StateMachine" parent_id_path=PackedInt32Array(866541521, 900024361) index="1" unique_id=1563185756 node_paths=PackedStringArray("camera_manager")]
+camera_manager = NodePath("../../../Camera3DManager")
+
+[node name="Camera3DManager" type="Node3D" parent="." unique_id=237596796]
+top_level = true
+script = ExtResource("3_5n7jr")
+metadata/_custom_type_script = "uid://b2knsmyh2hucs"
+
+[node name="CameraPivot" type="Node3D" parent="Camera3DManager" unique_id=640010563]
+transform = Transform3D(1, 0, -2.9802322e-08, 1.2396675e-08, 0.9093814, 0.41596338, 2.7101677e-08, -0.41596338, 0.9093814, 0.36373156, 4.9518223, 7.94913)
+
+[node name="Camera3D" type="Camera3D" parent="Camera3DManager/CameraPivot" unique_id=1476215448]
+
+[editable path="Player"]

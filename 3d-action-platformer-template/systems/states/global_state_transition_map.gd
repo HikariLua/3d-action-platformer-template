@@ -150,4 +150,3 @@ func _connect_signals(connections: Dictionary[Signal, Callable]) -> void:
 		signal_event.connect(callable)
 
 		assert(signal_event.is_connected(callable))
-

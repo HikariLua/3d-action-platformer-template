@@ -1,5 +1,7 @@
 extends Node3D
-@export var static_body_3d: StaticBody3D
 
 func _ready() -> void:
-	print(visibility_changed == self.visibility_changed)
+	var v: Vector3 = Vector3(3, 4, 5)
+	
+	print(v.normalized())
+	print(v.normalized().normalized())

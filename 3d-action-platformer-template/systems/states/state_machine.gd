@@ -44,7 +44,7 @@ func _input(event: InputEvent) -> void:
 		return
 
 	assert(active_state != null)
-	active_state._finite_input(event)
+	active_state._state_input(event)
 
 
 func _shortcut_input(event: InputEvent) -> void:
@@ -52,7 +52,7 @@ func _shortcut_input(event: InputEvent) -> void:
 		return
 
 	assert(active_state != null)
-	active_state._finite_shortcut_input(event)
+	active_state._state_shortcut_input(event)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -60,7 +60,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	assert(active_state != null)
-	active_state._finite_unhandled_input(event)
+	active_state._state_unhandled_input(event)
 
 
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -68,7 +68,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		return
 
 	assert(active_state != null)
-	active_state._finite_unhandled_key_input(event)
+	active_state._state_unhandled_key_input(event)
 
 
 func _process(delta: float) -> void:
@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 		return
 
 	assert(active_state != null)
-	active_state._finite_process(delta)
+	active_state._state_process(delta)
 
 
 func _physics_process(delta: float) -> void:
@@ -84,7 +84,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	assert(active_state != null)
-	active_state._finite_physics_process(delta)
+	active_state._state_physics_process(delta)
 	_check_transitions()
 
 

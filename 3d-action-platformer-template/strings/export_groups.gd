@@ -1,6 +1,6 @@
 @abstract
 class_name ExportGroups
-extends Object
+extends RefCounted
 
 
 const BODIES: StringName = "Bodies"
