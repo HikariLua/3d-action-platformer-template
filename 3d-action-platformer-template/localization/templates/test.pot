@@ -1,0 +1,19 @@
+# LANGUAGE translation for 3d-action-platformer-template for the following files:
+# res://systems/ui/settings_localization_keys.gd
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 3d-action-platformer-template\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: systems/ui/settings_localization_keys.gd:9
+msgid "UI.SETTINGS.RESOLUTION"
+msgstr ""
+
+msgid "3d-action-platformer-template"
+msgstr ""
