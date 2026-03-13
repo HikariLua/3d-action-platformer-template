@@ -18,7 +18,7 @@ var motion: MotionData
 
 func _ready() -> void:
 	assert(idle_state != null)
-	local_transitions.create_and_add(idle_state, _to_idle)
+	local_function_transitions.create_and_add(idle_state, _to_idle)
 
 	assert(character_body != null)
 	assert(motion_component != null)
@@ -32,7 +32,7 @@ func _state_physics_process(delta: float) -> void:
 	assert(motion != null)
 	assert(camera_manager != null)
 
-	var input_direction: Vector3 = InputComponent.get_input_direction().normalized()
+	var input_direction: Vector3 = InputComponent.get_motion_input_direction().normalized()
 	var direction: Vector3 = camera_manager.transform.basis * input_direction
 
 	character_body.velocity = MotionComponent.move_character_horizontaly(
@@ -51,5 +51,5 @@ func _state_physics_process(delta: float) -> void:
 
 
 func _to_idle() -> DecisionResult:
-	var input_direction: Vector3 = InputComponent.get_input_direction()
+	var input_direction: Vector3 = InputComponent.get_motion_input_direction()
 	return DecisionResult.create(input_direction == Vector3.ZERO)

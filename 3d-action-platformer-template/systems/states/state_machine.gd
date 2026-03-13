@@ -25,7 +25,9 @@ var active_state: State
 var state_history: Array[State] = []
 
 ## TODO: add docs
-var global_transitions: GlobalStateTransitionMap = GlobalStateTransitionMap.new()
+var global_signal_transitions: SignalStateTransitionMap = SignalStateTransitionMap.new()
+## TODO: add docs
+var global_function_transitions: FunctionStateTransitionMap = FunctionStateTransitionMap.new()
 
 var _disabled: bool = false:
 	set = _set_disabled
@@ -85,7 +87,13 @@ func _physics_process(delta: float) -> void:
 
 	assert(active_state != null)
 	active_state._state_physics_process(delta)
-	_check_transitions()
+
+	var has_transitioned: bool = _check_global_function_transitions()
+
+	if has_transitioned:
+		return
+
+	_check_state_function_transitions()
 
 
 ## Transitions to target state. You can optionaly pass a message to the target_state.
@@ -98,19 +106,27 @@ func transition_state(target_state: State, message: Dictionary = {}) -> void:
 
 	assert(active_state != null)
 	assert(target_state != null)
-	assert(self.is_ancestor_of(target_state))
+	assert(
+		self.is_ancestor_of(target_state),
+		"%s is not a child of the state machine" % target_state
+	)
 	
 	var old_state: State = active_state
 	var new_state: State = target_state
 	
+	active_state.local_signal_transitions.disconnect_all()
 	active_state._on_exit()
+
 	active_state = target_state
+
 	_update_state_history(target_state)
 
 	if message.is_empty():
 		active_state._on_enter()
 	else:
 		active_state._on_enter_with_message(message)
+
+	active_state.local_signal_transitions.connect_all()
 	
 	active_state_changed.emit(old_state, new_state)
 
@@ -137,16 +153,31 @@ func is_disabled() -> bool:
 	return _disabled
 
 
-func _check_transitions() -> void:
-	if _disabled:
-		return
+func _check_global_function_transitions() -> bool:
+	if global_function_transitions.is_empty():
+		return false
 
+	var has_transitioned: bool = _check_function_transitions(global_function_transitions)
+	return has_transitioned
+
+
+func _check_state_function_transitions() -> bool:
 	assert(active_state != null)
-	if active_state.local_transitions.is_empty():
-		return
+	if active_state.local_function_transitions.is_empty():
+		return false
 
-	var transitions_map: LocalStateTransitionMap = active_state.local_transitions
-	var transitions_dict: Dictionary[State, LocalStateTransition] = transitions_map.transitions
+	var has_transitioned: bool = _check_function_transitions(
+		active_state.local_function_transitions
+	)
+
+	return has_transitioned
+
+
+func _check_function_transitions(transitions_map: FunctionStateTransitionMap) -> bool:
+	if _disabled:
+		return false
+
+	var transitions_dict: Dictionary[State, FunctionStateTransition] = transitions_map.transitions
 	
 	var priority_state: State = null
 	var priority_state_message: Dictionary = {}
@@ -157,7 +188,7 @@ func _check_transitions() -> void:
 		if not target_state.can_be_transitioned_to:
 			continue
 
-		var transition: LocalStateTransition = transitions_dict.get(target_state)
+		var transition: FunctionStateTransition = transitions_dict.get(target_state)
 
 		if transition.disabled:
 			continue
@@ -171,9 +202,10 @@ func _check_transitions() -> void:
 				priority_state_message = decision_result.message
 
 	if priority_state == null:
-		return
+		return false
 
 	transition_state(priority_state, priority_state_message)
+	return true
 
 
 func _update_state_history(state: State) -> void:

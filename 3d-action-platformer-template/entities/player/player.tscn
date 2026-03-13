@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://c6osf3bq18xy"]
 
 [ext_resource type="Script" uid="uid://d3ekbefsf8y5p" path="res://systems/states/state_machine.gd" id="1_abrql"]
-[ext_resource type="Script" uid="uid://dhhbv3his8cq7" path="res://systems/components/Input/input_component.gd" id="3_8fjmc"]
-[ext_resource type="Script" uid="uid://diynax3su0wjv" path="res://systems/components/Motion/motion_component.gd" id="3_qiwj3"]
-[ext_resource type="Script" uid="uid://bntg65pvogw3t" path="res://systems/components/Motion/motion_data.gd" id="4_26q78"]
-[ext_resource type="Script" uid="uid://uv2reoa7h50" path="res://systems/components/Input/input_data.gd" id="4_qiwj3"]
+[ext_resource type="Script" uid="uid://diynax3su0wjv" path="res://systems/components/motion/motion_component.gd" id="3_qiwj3"]
+[ext_resource type="Script" uid="uid://bntg65pvogw3t" path="res://systems/components/motion/motion_data.gd" id="4_26q78"]
 [ext_resource type="Script" uid="uid://ci8smtmvq4i4q" path="res://entities/player/states/player_state_idle.gd" id="6_qiwj3"]
 [ext_resource type="Script" uid="uid://d1j45fa8lixtd" path="res://entities/player/states/player_state_run.gd" id="7_26q78"]
 
@@ -12,13 +10,10 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfv1e"]
 
-[sub_resource type="Resource" id="Resource_26q78"]
-script = ExtResource("4_qiwj3")
-metadata/_custom_type_script = "uid://uv2reoa7h50"
-
 [sub_resource type="Resource" id="Resource_bectd"]
 script = ExtResource("4_26q78")
 max_speed = 10
+gravity = null
 metadata/_custom_type_script = "uid://bntg65pvogw3t"
 
 [node name="Player" type="CharacterBody3D" unique_id=866541521]
@@ -30,11 +25,6 @@ mesh = SubResource("CapsuleMesh_sfv1e")
 shape = SubResource("CapsuleShape3D_sfv1e")
 
 [node name="Components" type="Node" parent="." unique_id=287978573]
-
-[node name="InputComponent" type="Node" parent="Components" unique_id=1276325392]
-script = ExtResource("3_8fjmc")
-data_template = SubResource("Resource_26q78")
-metadata/_custom_type_script = "uid://dhhbv3his8cq7"
 
 [node name="MotionComponent" type="Node" parent="Components" unique_id=746552101]
 script = ExtResource("3_qiwj3")
@@ -57,3 +47,4 @@ script = ExtResource("7_26q78")
 character_body = NodePath("../..")
 motion_component = NodePath("../../Components/MotionComponent")
 idle_state = NodePath("../Idle")
+can_be_transitioned_to = null

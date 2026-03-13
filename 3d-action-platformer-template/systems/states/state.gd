@@ -9,7 +9,8 @@ extends Node
 @export var can_be_transitioned_to: bool = true
 
 ## TODO: add docs
-var local_transitions: LocalStateTransitionMap = LocalStateTransitionMap.new()
+var local_function_transitions: FunctionStateTransitionMap = FunctionStateTransitionMap.new()
+var local_signal_transitions: SignalStateTransitionMap = SignalStateTransitionMap.new()
 
 
 ## TODO: add docs

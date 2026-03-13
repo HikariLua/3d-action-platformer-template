@@ -1,11 +1,11 @@
-class_name LocalStateTransitionMap
+class_name FunctionStateTransitionMap
 extends RefCounted
 
-var transitions: Dictionary[State, LocalStateTransition] = {}
+var transitions: Dictionary[State, FunctionStateTransition] = {}
 
 
 ## TODO: add docs
-func add(target_state: State, transition: LocalStateTransition) -> void:
+func add(target_state: State, transition: FunctionStateTransition) -> void:
 	assert(target_state != null)
 	assert(not transitions.has(target_state))
 
@@ -21,13 +21,13 @@ func create_and_add(
 	assert(target_state != null)
 	assert(not transitions.has(target_state))
 
-	var transition: LocalStateTransition = LocalStateTransition.create(callable, priority) 
+	var transition: FunctionStateTransition = FunctionStateTransition.create(callable, priority) 
 
 	transitions.get_or_add(target_state, transition)
 
 
 ## TODO: add docs
-func update(target_state: State, transition: LocalStateTransition) -> void:
+func update(target_state: State, transition: FunctionStateTransition) -> void:
 	assert(target_state != null)
 	assert(transitions.has(target_state))
 

@@ -1,12 +1,12 @@
-class_name GlobalStateTransitionMap
+class_name SignalStateTransitionMap
 extends RefCounted
 
 
-var transitions: Dictionary[State, GlobalStateTransition] = {}
+var transitions: Dictionary[State, SignalStateTransition] = {}
 
 
 ## TODO: add docs
-func add_transition(target_state: State, transition: GlobalStateTransition) -> void:
+func add(target_state: State, transition: SignalStateTransition) -> void:
 	assert(target_state != null)
 	assert(not transitions.has(target_state))
 
@@ -16,7 +16,7 @@ func add_transition(target_state: State, transition: GlobalStateTransition) -> v
 
 
 ## TODO: add docs
-func create_and_add_transition(
+func create_and_add(
 	signal_event: Signal,
 	target_state: State,
 	callable: Callable
@@ -25,7 +25,7 @@ func create_and_add_transition(
 	assert(target_state != null)
 	assert(not transitions.has(target_state))
 
-	var transition: GlobalStateTransition = GlobalStateTransition.create({
+	var transition: SignalStateTransition = SignalStateTransition.create({
 		signal_event: callable
 	}) 
 
@@ -34,14 +34,14 @@ func create_and_add_transition(
 	transitions.get_or_add(target_state, transition)
 
 
-func create_and_add_multiple_transitions(
+func create_and_add_multiple(
 	target_state: State,
 	transition_dict: Dictionary[Signal, Callable]
 ) -> void:
 	assert(target_state != null)
 	assert(not transitions.has(target_state))
 
-	var transition: GlobalStateTransition = GlobalStateTransition.create(transition_dict) 
+	var transition: SignalStateTransition = SignalStateTransition.create(transition_dict) 
 
 	_connect_signals(transition_dict)
 	transitions.get_or_add(target_state, transition)
@@ -49,7 +49,7 @@ func create_and_add_multiple_transitions(
 
 
 ## TODO: add docs
-func update_transition(target_state: State, transition: GlobalStateTransition) -> void:
+func update(target_state: State, transition: SignalStateTransition) -> void:
 	assert(target_state != null)
 	assert(transitions.has(target_state))
 
@@ -63,7 +63,7 @@ func disable_all_transitions(target_state: State) -> void:
 	assert(target_state != null)
 	assert(transitions.has(target_state))
 
-	var global_transition: GlobalStateTransition = transitions[target_state]
+	var global_transition: SignalStateTransition = transitions[target_state]
 	_disconnect_signals(global_transition.connections)
 
 
@@ -72,7 +72,7 @@ func disable_transition(target_state: State, signal_event: Signal) -> void:
 	assert(target_state != null)
 	assert(transitions.has(target_state))
 
-	var global_transition: GlobalStateTransition = transitions[target_state]
+	var global_transition: SignalStateTransition = transitions[target_state]
 
 	assert(global_transition.connections.has(signal_event))
 	var callable: Callable = global_transition.connections[signal_event]
@@ -88,7 +88,7 @@ func enable_all_transitions(target_state: State) -> void:
 	assert(target_state != null)
 	assert(transitions.has(target_state))
 
-	var global_transition: GlobalStateTransition = transitions[target_state]
+	var global_transition: SignalStateTransition = transitions[target_state]
 	_connect_signals(global_transition.connections)
 
 
@@ -97,7 +97,7 @@ func enable_transition(target_state: State, signal_event: Signal) -> void:
 	assert(target_state != null)
 	assert(transitions.has(target_state))
 
-	var global_transition: GlobalStateTransition = transitions[target_state]
+	var global_transition: SignalStateTransition = transitions[target_state]
 
 	assert(global_transition.connections.has(signal_event))
 	var callable: Callable = global_transition.connections[signal_event]
@@ -127,6 +127,22 @@ func add_connection(
 	transitions[target_state].add_transition(signal_event, callable)
 
 	assert(signal_event.is_connected(callable))
+
+
+func disconnect_all() -> void:
+	if transitions.is_empty():
+		return
+
+	for state: State in transitions:
+		_disconnect_signals(transitions[state].connections)
+
+
+func connect_all() -> void:
+	if transitions.is_empty():
+		return
+
+	for state: State in transitions:
+		_connect_signals(transitions[state].connections)
 
 
 func _disconnect_signals(connections: Dictionary[Signal, Callable]) -> void:

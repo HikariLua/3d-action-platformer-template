@@ -16,7 +16,7 @@ var motion: MotionData
 
 func _ready() -> void:
 	assert(run_state != null)
-	local_transitions.create_and_add(run_state, _to_run)
+	local_function_transitions.create_and_add(run_state, _to_run)
 
 	assert(character_body != null)
 	assert(motion_component != null)
@@ -45,5 +45,5 @@ func _state_physics_process(delta: float) -> void:
 
 
 func _to_run() -> DecisionResult:
-	var input_direction: Vector3 = InputComponent.get_input_direction()
+	var input_direction: Vector3 = InputComponent.get_motion_input_direction()
 	return DecisionResult.create(input_direction != Vector3.ZERO)

@@ -1,14 +1,14 @@
-class_name GlobalStateTransition
+class_name SignalStateTransition
 extends RefCounted
 
 
 var connections: Dictionary[Signal, Callable] = {}
 
 
-static func create(state_connections: Dictionary[Signal, Callable]) -> GlobalStateTransition:
+static func create(state_connections: Dictionary[Signal, Callable]) -> SignalStateTransition:
 	assert(not state_connections.is_empty())
 
-	var transition: GlobalStateTransition = GlobalStateTransition.new()
+	var transition: SignalStateTransition = SignalStateTransition.new()
 
 	for connection: Signal in state_connections:
 		assert(not connection.is_null())

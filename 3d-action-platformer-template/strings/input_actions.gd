@@ -10,7 +10,6 @@ const MOVE_DOWN: StringName = "move_down"
 const MOVE_BACKWARD: StringName = "move_backward"
 const MOVE_FORWARD: StringName = "move_forward"
 
-
 const MOVE_ACTIONS: Array[StringName] = [
 	MOVE_LEFT,
 	MOVE_RIGHT,
@@ -18,4 +17,16 @@ const MOVE_ACTIONS: Array[StringName] = [
 	MOVE_DOWN,
 	MOVE_FORWARD,
 	MOVE_BACKWARD
+]
+
+const CAMERA_LEFT: StringName = "camera_left"
+const CAMERA_RIGHT: StringName = "camera_right"
+const CAMERA_UP: StringName = "camera_up"
+const CAMERA_DOWN: StringName = "camera_down"
+
+const CAMERA_ACTIONS: Array[StringName] = [
+	CAMERA_LEFT, 
+	CAMERA_RIGHT,
+	CAMERA_UP,
+	CAMERA_DOWN 
 ]

@@ -1,4 +1,4 @@
-class_name LocalStateTransition
+class_name FunctionStateTransition
 extends RefCounted
 
 
@@ -13,10 +13,10 @@ var _condition_callable: Callable
 
 
 ## TODO: add docs
-static func create(callable: Callable, local_priority: int = 0) -> LocalStateTransition:
+static func create(callable: Callable, local_priority: int = 0) -> FunctionStateTransition:
 	assert(callable.is_valid())
 	assert(callable.get_argument_count() == 0)
-	var transition: LocalStateTransition = LocalStateTransition.new()
+	var transition: FunctionStateTransition = FunctionStateTransition.new()
 
 	transition._condition_callable = callable
 	transition.priority = local_priority
