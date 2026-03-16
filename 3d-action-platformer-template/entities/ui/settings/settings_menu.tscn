@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cadtlgefbxw8c"]
 
 [ext_resource type="Script" uid="uid://0qtwcvfx5ve" path="res://entities/ui/settings/settings_menu.gd" id="1_xo33x"]
+[ext_resource type="Script" uid="uid://brqmebwbtmegl" path="res://entities/ui/settings/h_slider_container.gd" id="2_dold6"]
 [ext_resource type="Script" uid="uid://dq7rbwessrx15" path="res://entities/ui/settings/customize_controls_button.gd" id="2_kfd87"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tfml5"]
@@ -9,7 +10,7 @@ font_size = 54
 [sub_resource type="LabelSettings" id="LabelSettings_rso6a"]
 font_size = 26
 
-[node name="SettingsMenu" type="Control" unique_id=836134712 node_paths=PackedStringArray("focus_on_ready")]
+[node name="SettingsMenu" type="Control" unique_id=836134712 node_paths=PackedStringArray("focus_on_ready", "master_volume_slider", "music_volume_slider", "sfx_volume_slider", "mouse_sensitivity_slider", "camera_sensitivity_slider", "resolution_options", "window_mode_options", "graphic_preset_options", "language_options")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +18,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xo33x")
-focus_on_ready = NodePath("ScrollContainer/Options/MasterVolume/HBoxContainer/MasterVolumeSlider")
+focus_on_ready = NodePath("ScrollContainer/Options/MasterVolume/HMasterContainer/MasterVolumeSlider")
+master_volume_slider = NodePath("ScrollContainer/Options/MasterVolume/HMasterContainer/MasterVolumeSlider")
+music_volume_slider = NodePath("ScrollContainer/Options/MusicVolume/HMusicContainer/MusicVolumeSlider")
+sfx_volume_slider = NodePath("ScrollContainer/Options/SFXVolume/HSFXContainer/SFXVolumeSlider")
+mouse_sensitivity_slider = NodePath("ScrollContainer/Options/MouseSensitivity/HBoxContainer/MouseSensitivitySlider")
+camera_sensitivity_slider = NodePath("ScrollContainer/Options/CameraSensitivity/HBoxContainer/CameraSensitivity")
+resolution_options = NodePath("ScrollContainer/Options/ScreenResolution/ResolutionOptionButton")
+window_mode_options = NodePath("ScrollContainer/Options/WindowMode/WindowModeOptionButton")
+graphic_preset_options = NodePath("ScrollContainer/Options/GraphicQuality/GraphicOptionButton")
+language_options = NodePath("ScrollContainer/Options/Language/LanguageOptionButton")
 
 [node name="Label" type="Label" parent="." unique_id=1123861975]
 layout_mode = 1
@@ -64,23 +74,30 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/Options/MasterVolume" unique_id=1653677698]
+[node name="HMasterContainer" type="HBoxContainer" parent="ScrollContainer/Options/MasterVolume" unique_id=1653677698 node_paths=PackedStringArray("label", "slider")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 alignment = 2
+script = ExtResource("2_dold6")
+label = NodePath("MasterLabel")
+slider = NodePath("MasterVolumeSlider")
 
-[node name="SensitivityLabel" type="Label" parent="ScrollContainer/Options/MasterVolume/HBoxContainer" unique_id=683263248]
+[node name="MasterLabel" type="Label" parent="ScrollContainer/Options/MasterVolume/HMasterContainer" unique_id=683263248]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 text = "100"
 label_settings = SubResource("LabelSettings_rso6a")
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="MasterVolumeSlider" type="HSlider" parent="ScrollContainer/Options/MasterVolume/HBoxContainer" unique_id=1263570282]
+[node name="MasterVolumeSlider" type="HSlider" parent="ScrollContainer/Options/MasterVolume/HMasterContainer" unique_id=1263570282]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_neighbor_top = NodePath("../../../CustomizeControls/ControlsButton")
-focus_neighbor_bottom = NodePath("../../../MusicVolume/HBoxContainer/MusicVolumeSlider")
+focus_neighbor_bottom = NodePath("../../../MusicVolume/HMusicContainer/MusicVolumeSlider")
 
 [node name="MusicVolume" type="HBoxContainer" parent="ScrollContainer/Options" unique_id=118207958]
 layout_mode = 2
@@ -99,23 +116,30 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/Options/MusicVolume" unique_id=109950743]
+[node name="HMusicContainer" type="HBoxContainer" parent="ScrollContainer/Options/MusicVolume" unique_id=109950743 node_paths=PackedStringArray("label", "slider")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 alignment = 2
+script = ExtResource("2_dold6")
+label = NodePath("MusicLabel")
+slider = NodePath("MusicVolumeSlider")
 
-[node name="SensitivityLabel" type="Label" parent="ScrollContainer/Options/MusicVolume/HBoxContainer" unique_id=1867926317]
+[node name="MusicLabel" type="Label" parent="ScrollContainer/Options/MusicVolume/HMusicContainer" unique_id=1867926317]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 text = "100"
 label_settings = SubResource("LabelSettings_rso6a")
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="MusicVolumeSlider" type="HSlider" parent="ScrollContainer/Options/MusicVolume/HBoxContainer" unique_id=1697729444]
+[node name="MusicVolumeSlider" type="HSlider" parent="ScrollContainer/Options/MusicVolume/HMusicContainer" unique_id=1697729444]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../../../MasterVolume/HBoxContainer/MasterVolumeSlider")
-focus_neighbor_bottom = NodePath("../../../SFXVolume/HBoxContainer/SFXVolumeSlider")
+focus_neighbor_top = NodePath("../../../MasterVolume/HMasterContainer/MasterVolumeSlider")
+focus_neighbor_bottom = NodePath("../../../SFXVolume/HSFXContainer/SFXVolumeSlider")
 
 [node name="SFXVolume" type="HBoxContainer" parent="ScrollContainer/Options" unique_id=1739153296]
 layout_mode = 2
@@ -134,22 +158,29 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/Options/SFXVolume" unique_id=1350039386]
+[node name="HSFXContainer" type="HBoxContainer" parent="ScrollContainer/Options/SFXVolume" unique_id=1350039386 node_paths=PackedStringArray("label", "slider")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 alignment = 2
+script = ExtResource("2_dold6")
+label = NodePath("SFXLabel")
+slider = NodePath("SFXVolumeSlider")
 
-[node name="SensitivityLabel" type="Label" parent="ScrollContainer/Options/SFXVolume/HBoxContainer" unique_id=1818260012]
+[node name="SFXLabel" type="Label" parent="ScrollContainer/Options/SFXVolume/HSFXContainer" unique_id=1818260012]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 text = "100"
 label_settings = SubResource("LabelSettings_rso6a")
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="SFXVolumeSlider" type="HSlider" parent="ScrollContainer/Options/SFXVolume/HBoxContainer" unique_id=203323921]
+[node name="SFXVolumeSlider" type="HSlider" parent="ScrollContainer/Options/SFXVolume/HSFXContainer" unique_id=203323921]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../../../MusicVolume/HBoxContainer/MusicVolumeSlider")
+focus_neighbor_top = NodePath("../../../MusicVolume/HMusicContainer/MusicVolumeSlider")
 focus_neighbor_bottom = NodePath("../../../MouseSensitivity/HBoxContainer/MouseSensitivitySlider")
 
 [node name="MouseSensitivity" type="HBoxContainer" parent="ScrollContainer/Options" unique_id=2082496107]
@@ -177,14 +208,18 @@ alignment = 2
 
 [node name="SensitivityLabel" type="Label" parent="ScrollContainer/Options/MouseSensitivity/HBoxContainer" unique_id=402967665]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 text = "100"
 label_settings = SubResource("LabelSettings_rso6a")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="MouseSensitivitySlider" type="HSlider" parent="ScrollContainer/Options/MouseSensitivity/HBoxContainer" unique_id=1586030136]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-focus_neighbor_top = NodePath("../../../SFXVolume/HBoxContainer/SFXVolumeSlider")
+focus_neighbor_top = NodePath("../../../SFXVolume/HSFXContainer/SFXVolumeSlider")
 focus_neighbor_bottom = NodePath("../../../CameraSensitivity/HBoxContainer/CameraSensitivity")
 
 [node name="CameraSensitivity" type="HBoxContainer" parent="ScrollContainer/Options" unique_id=357019665]
@@ -212,8 +247,12 @@ alignment = 2
 
 [node name="SensitivityLabel" type="Label" parent="ScrollContainer/Options/CameraSensitivity/HBoxContainer" unique_id=1140863499]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 text = "100"
 label_settings = SubResource("LabelSettings_rso6a")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="CameraSensitivity" type="HSlider" parent="ScrollContainer/Options/CameraSensitivity/HBoxContainer" unique_id=1928046093]
 layout_mode = 2
@@ -340,6 +379,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 focus_neighbor_top = NodePath("../../Language/LanguageOptionButton")
-focus_neighbor_bottom = NodePath("../../MasterVolume/HBoxContainer/MasterVolumeSlider")
+focus_neighbor_bottom = NodePath("../../MasterVolume/HMasterContainer/MasterVolumeSlider")
 text = "UI.SETTINGS.BUTTON.CUSTOMIZE"
 script = ExtResource("2_kfd87")
